@@ -1,0 +1,206 @@
+<script>
+    var wasm_version = "RUST_VERSION";
+
+    const ws = createWS("index.html", 'ws://localhost:3020/ws',
+        (e) => {
+            if (e.data === "restart-all") {
+                window.location.reload();
+            } else if (e.data === "pong") {
+                // ignore
+            } else {
+                console.log('Msg:', e.data);
+            }
+        },
+        (ws) => { }
+    )
+
+    async function get_msg_code() {
+        let url_config = {
+            b_w_gfx_js: "/pub/rust_" + wasm_version + "/b_html_gfx.js",
+            b_w_gfx_bg_wasm: "/pub/rust_" + wasm_version + "/b_html_gfx_bg.wasm",
+            b_w_vid_js: "/pub/rust_" + wasm_version + "/b_html_vid.js",
+            b_w_vid_bg_wasm: "/pub/rust_" + wasm_version + "/b_html_vid_bg.wasm",
+            b_w_logic_js: "/pub/rust_" + wasm_version + "/b_ww_logic.js",
+            b_w_logic_bg_wasm: "/pub/rust_" + wasm_version + "/b_ww_logic_bg.wasm",
+            b_w_rune_js: "/pub/rust_" + wasm_version + "/b_ww_rune.js",
+            b_w_rune_bg_wasm: "/pub/rust_" + wasm_version + "/b_ww_rune_bg.wasm",
+            b_w_python_js: "/pub/rust_" + wasm_version + "/b_ww_python.js",
+            b_w_python_bg_wasm: "/pub/rust_" + wasm_version + "/b_ww_python_bg.wasm",
+            b_w_sqlite_js: "/pub/rust_" + wasm_version + "/b_ww_sqlite.js",
+            b_w_sqlite_bg_wasm: "/pub/rust_" + wasm_version + "/b_ww_sqlite_bg.wasm",
+            b_w_sheet_js: "/pub/rust_" + wasm_version + "/b_ww_sheet.js",
+            b_w_sheet_bg_wasm: "/pub/rust_" + wasm_version + "/b_ww_sheet_bg.wasm",
+            worker_js: "/pub/static_" + wasm_version + "/worker.js",
+        };
+
+        let ks = Object.keys(url_config);
+        let urls = ks.map((k) => url_config[k]);
+        let fetchs_p = urls.map((url) => fetch(url));
+        let fetchs = await Promise.all(fetchs_p);
+        let last_modified2 = fetchs.map((f) => new Date(f.headers.get("Last-Modified")).getTime());
+        let blobs = await Promise.all(fetchs.map((f) => f.blob()));
+        let msg_code = ks.reduce((acc, key, index2) => {
+            acc[key] = blobs[index2];
+            return acc;
+        }, {});
+        let mod_times = urls.reduce((acc, key, index2) => {
+            acc[key] = last_modified2[index2];
+            return acc;
+        }, {});
+        msg_code.window_location_href = window.location.href;
+        msg_code.window_location_host = window.location.host;
+        msg_code.window_location_protocol = window.location.protocol;
+        msg_code.last_modified = last_modified2;
+        msg_code.mod_times = mod_times;
+        msg_code.wasm_version = wasm_version;
+
+
+
+        return msg_code;
+    }
+
+    window.addEventListener("keydown", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+
+</script>
+
+<body>
+</body>
+
+
+<script>
+    var urls = {};
+    if (window.location.hostname === "localhost") {
+        urls = {
+            gfx: `http://localhost:3001/pub/static_${wasm_version}/h_gfx.html`,
+            vid: `http://localhost:3002/pub/static_${wasm_version}/h_vid.html`,
+            ws: "ws://localhost:3010/ws/"
+        }
+    } else {
+        urls = {
+            gfx: `https://m1.npc-repl.pages.dev/pub/static_${wasm_version}/h_gfx.html`,
+            vid: `https://m1.npc-repl.pages.dev/pub/static_${wasm_version}/h_vid.html`,
+            ws: "http://localhost:12345/"
+        }
+    }
+
+    function makeIframe(s) {
+        const opts = {
+            "style": "pointer-events: all",
+            "allow": "cross-origin-isolated",
+            "credentialless": "",
+            "width": "100%",
+            "height": "100%",
+            "scrolling": "no",
+            "src": s
+        };
+
+        return Object.entries(opts)
+            .map(([k, v]) => `${k}='${v}'`)
+            .join(' ');
+    }
+
+    const s = `
+<div class="container"> 
+    <div class="bot-left-sidebar " >
+        <iframe id='iframe_h_vid' style='border-width: 0' ${makeIframe(urls.vid)}></iframe>
+    </div>
+    <div class="main-content">
+        <iframe id='iframe_h_gfx' style='border-width: 0' ${makeIframe(urls.gfx)}></iframe>
+    </div>
+</div>
+`;
+
+
+
+    (async () => {
+        console.log("index_main: wasm_version = " + wasm_version);
+
+        let msg_code = await get_msg_code();
+        globalThis.msg_code = msg_code;
+
+        try {
+
+            const url_b_w_logic_js = URL.createObjectURL(msg_code.b_w_logic_js);
+            const url_b_w_logic_bg_wasm = URL.createObjectURL(msg_code.b_w_logic_bg_wasm);
+            const url_worker_js = URL.createObjectURL(msg_code.worker_js);
+
+            var module = await import(url_b_w_logic_js);
+            await module.default(url_b_w_logic_bg_wasm);
+
+            module.Xdom_Logger_Util.__set_loggers__wasm("index.html");
+
+            const ww_net = new Worker(url_worker_js);
+            const ww_rune = new Worker(url_worker_js);
+            const ww_python = new Worker(url_worker_js);
+            const ww_sqlite = new Worker(url_worker_js);
+            const ww_sheet = new Worker(url_worker_js);
+            const my_router = new Worker(url_worker_js);
+
+            function worker_handler(e) {
+                const data = e.data
+                switch (e.data.to) {
+                    case "fetch_msg_code":
+                        ww_net.postMessage({ to: "start", msg_code: msg_code }, "*", []);
+                        break;
+                    default:
+                        my_router.postMessage(data, data.transfer_list)
+                }
+            }
+
+
+            my_router.onmessage = function (event) {
+                if (event.data === "router ready") {
+                    (async () => {
+                        window.onmessage = function (event) {
+                            // console.log("index.html: ", event);
+                            const data = event.data
+                            switch (data.to) {
+                                case "router_register_port":
+                                    my_router.postMessage(data, data.transfer_list);
+                                    break;
+                                case "fetch_msg_code_gfx":
+                                    obj = document.getElementById("iframe_h_gfx")
+                                    obj.contentWindow.postMessage({ to: "start", msg_code: msg_code }, "*", []);
+                                    break;
+                                case "fetch_msg_code_vid":
+                                    obj = document.getElementById("iframe_h_vid")
+                                    obj.contentWindow.postMessage({ to: "start", msg_code: msg_code }, "*", []);
+                                    break;
+                            }
+                        }
+                        window.document.body.innerHTML = s;
+                        let parts = make_msg_pair("h_index");
+                        link_msg_port("h_index", parts.port, module, async function () {
+                        });
+
+                        window.ffi = await module.Rust_Index_Ffi.rust_index_ffi__create("h_index", msg_code, null);
+
+                        my_router.postMessage(parts.msg, parts.msg.transfer_list)
+                    })();
+                } else {
+                    console.log("index.html: unknown command');")
+                }
+            }
+            ww_net.onmessage = worker_handler;
+            ww_rune.onmessage = worker_handler;
+            ww_python.onmessage = worker_handler;
+            ww_sqlite.onmessage = worker_handler;
+            ww_sheet.onmessage = worker_handler;
+
+            my_router.postMessage({ tag: "start router", msg_code: msg_code })
+            ww_net.postMessage({ tag: "start ww_net", msg_code: msg_code })
+            ww_rune.postMessage({ tag: "start ww_rune", msg_code: msg_code })
+            ww_python.postMessage({ tag: "start ww_python", msg_code: msg_code })
+            ww_sqlite.postMessage({ tag: "start ww_sqlite", msg_code: msg_code })
+            ww_sheet.postMessage({ tag: "start ww_sheet", msg_code: msg_code })
+
+            globalThis.my_router = my_router;
+        } catch (e) {
+            console.log("start_wasm error: ", e);
+        }
+    })();
+</script>

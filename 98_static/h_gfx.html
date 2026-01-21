@@ -1,0 +1,31 @@
+<body>
+
+<div style="z-index:1; position:absolute" id="main_canvas_div">
+    <canvas id="main_canvas"></canvas>
+</div>
+
+<script>
+    var cnt = 0;
+
+
+    function ffi_force_main_canvas() {
+        const canvas = document.getElementById("main_canvas");
+        canvas.getContext("webgl2", {preserveDrawingBuffer: true});
+        console.log("forcing webgl2   preserveDrawingBuffer");
+    }
+
+    window.ffi_force_main_canvas = ffi_force_main_canvas;
+
+    window.onmessage = function (e) {
+        (async function () {
+            let parts = await rust_gfx_ffi__create("h_gfx", e.data.msg_code);
+            window.parent.postMessage(parts.msg, "*", parts.msg.transfer_list);
+        })()
+    }
+
+
+    window.parent.postMessage({to: "fetch_msg_code_gfx"}, "*");
+
+
+</script>
+</body>
