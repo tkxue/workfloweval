@@ -1,0 +1,7 @@
+1. All code I wrote is AGPL.
+
+2. There is code here I copied from other libs/demos/examples which testing things out.
+   Those copied code belongs to their own license (mostly Apache/MIT/BSD),
+   but I need to formally separate things out / correctly labeled them.
+
+3. This applies to (but limited to) all the egui code I copied/pasted.
