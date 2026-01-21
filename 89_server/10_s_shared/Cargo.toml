@@ -1,0 +1,16 @@
+[package]
+name = "s_shared"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+foundationdb = { version = "0.10.0", default-features = false, features = ["fdb-7_3", "embedded-fdb-include"] }
+tokio = { version = "1.48.0", default-features = false, features = ["rt-multi-thread"] }
+rustler = "0.36.2"
+fastembed = { version = "5", default-features = false, features = ["hf-hub-rustls-tls", "ort-load-dynamic"] }
+mimalloc = "0.1.48"
+anyhow = "1.0.100"
+
+
+[lib]
+path = "./lib.rs"

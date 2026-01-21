@@ -1,0 +1,24 @@
+[package]
+name = "c_html_vid"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+# dioxus = { version = "0.7", features = ["web"]}
+leptos = { version = "0.8.15", features = ["csr"]}
+
+
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+c_app_msg = { path = "/r/code/rust/79_client/19_c_app_msg" }
+c_app_repl = { path = "/r/code/rust/79_client/61_c_app_repl" }
+c_app_base = { path = "/r/code/rust/79_client/60_c_app_base" }
+
+wasm-bindgen = "0.2.106"
+web_common = { path = "/r/code/rust/79_client/09_c_web_common" }
+console_error_panic_hook = { version = "0.1.7", default-features = false }
+
+
+
+[lib]
+path = "./lib.rs"

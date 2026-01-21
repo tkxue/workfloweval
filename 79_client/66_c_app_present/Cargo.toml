@@ -1,0 +1,22 @@
+[package]
+name = "c_app_present"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+web_common = { path = "/r/code/rust/79_client/09_c_web_common" }
+egui = { version = "0.33.3", features = ["color-hex"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.146", features = [] }
+c_egui_base = { path = "/r/code/rust/79_client/50_c_egui_base" }
+eframe = { version = "0.33.3", default-features = true, features = ["wgpu", "persistence", "wgpu"] }
+c_app_repl = { path = "/r/code/rust/79_client/61_c_app_repl" }
+
+
+c_app_base = { path = "/r/code/rust/79_client/60_c_app_base" }
+c_app_msg = { path = "/r/code/rust/79_client/19_c_app_msg" }
+
+[lib]
+path = "./lib.rs"

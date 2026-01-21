@@ -1,0 +1,19 @@
+[package]
+name = "s_state"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+foundationdb = { version = "0.10.0", default-features = false, features = ["fdb-7_3", "embedded-fdb-include"] }
+tokio = { version = "1.48.0", default-features = false, features = ["rt-multi-thread"] }
+rustler = "0.36.2"
+fastembed = { version = "5", default-features = false, features = ["hf-hub-rustls-tls", "ort-load-dynamic"] }
+mimalloc = "0.1.48"
+anyhow = "1.0.100"
+s_shared = { path = "/r/code/rust/89_server/10_s_shared" }
+serde = { version = "1.0.228", features = ["derive"] }
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+n_msg = { path = "/r/code/rust/29_net/99_n_msg" }
+
+[lib]
+path = "./lib.rs"

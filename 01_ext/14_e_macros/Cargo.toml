@@ -1,0 +1,14 @@
+[package]
+name = "e_macros"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+e_include = { path = "/r/code/rust/01_ext/10_e_include" }
+e_my_proc_macro = { path = "/r/code/rust/01_ext/04_e_my_proc_macro" }
+e_jsdata = { path = "/r/code/rust/01_ext/11_e_jsdata" }
+wasm-bindgen = "0.2.106"
+
+[lib]
+path = "./lib.rs"

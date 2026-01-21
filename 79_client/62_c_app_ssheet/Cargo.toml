@@ -1,0 +1,20 @@
+[package]
+name = "c_app_ssheet"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+egui = { version = "0.33.3", features = ["color-hex"] }
+c_egui_base = { path = "/r/code/rust/79_client/50_c_egui_base" }
+log = "0.4.29"
+chrono = { version = "0.4.42", features = ["js-sys", "wasmbind"] }
+indexmap = "2.13.0"
+fastrand = "2"
+rust_decimal = "1.37"
+rust_decimal_macros = "1.37"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.146", features = [] }
+
+
+[lib]
+path = "./lib.rs"

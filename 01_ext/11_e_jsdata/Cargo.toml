@@ -1,0 +1,12 @@
+[package]
+name = "e_jsdata"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+
+e_include = { path = "/r/code/rust/01_ext/10_e_include" }
+
+[lib]
+path = "./lib.rs"

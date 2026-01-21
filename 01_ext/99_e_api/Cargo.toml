@@ -1,0 +1,14 @@
+[package]
+name = "e_api"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+e_include = { path = "/r/code/rust/01_ext/10_e_include" }
+e_macros = { path = "/r/code/rust/01_ext/14_e_macros" }
+e_my_proc_macro = { path = "/r/code/rust/01_ext/04_e_my_proc_macro" }
+e_jsdata = { path = "/r/code/rust/01_ext/11_e_jsdata" }
+
+
+[lib]
+path = "./lib.rs"

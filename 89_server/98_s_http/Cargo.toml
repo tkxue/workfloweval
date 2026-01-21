@@ -1,0 +1,19 @@
+[package]
+name = "s_http"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8.8", features = ["ws"] }
+s_shared = { path = "/r/code/rust/89_server/10_s_shared" }
+s_app = { path = "/r/code/rust/89_server/90_s_app" }
+tokio = { version = "1.48.0", default-features = false, features = ["rt-multi-thread"] }
+serde = "1.0.228"
+serde_json = "1.0.148"
+async-trait = "0.1.89"
+tower-http = { version = "0.6.8", features = ["cors"] }
+n_msg = { path = "/r/code/rust/29_net/99_n_msg" }
+e_jsdata = { path = "/r/code/rust/01_ext/11_e_jsdata" }
+
+[lib]
+path = "./lib.rs"

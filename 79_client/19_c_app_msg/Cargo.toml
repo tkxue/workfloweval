@@ -1,0 +1,19 @@
+[package]
+name = "c_app_msg"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+js-sys = { version = "0.3.66" }
+wasm-bindgen = { version = "0.2.106", default-features = false }
+e_include = { path = "/r/code/rust/01_ext/10_e_include" }
+serde-wasm-bindgen = "0.6.5"
+serde = { version = "1.0.228", features = ["derive"] }
+n_msg = { path = "/r/code/rust/29_net/99_n_msg" }
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+web_common = { path = "/r/code/rust/79_client/09_c_web_common" }
+async-oneshot = "0.5.9"
+web-sys = { version = "^0.3.72", features = ["HtmlCanvasElement", "console"] }
+
+[lib]
+path = "./lib.rs"

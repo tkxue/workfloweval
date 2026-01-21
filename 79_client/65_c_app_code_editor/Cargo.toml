@@ -1,0 +1,9 @@
+[package]
+name = "c_app_code_editor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[lib]
+path = "./lib.rs"

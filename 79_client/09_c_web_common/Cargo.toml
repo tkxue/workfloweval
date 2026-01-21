@@ -1,0 +1,15 @@
+[package]
+name = "web_common"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+wasm-bindgen = { version = "0.2.106", default-features = false }
+wasm-bindgen-futures = { version = "0.4.45", default-features = false }
+futures-lite = "2.6.0"
+serde = { version = "1.0.228", features = ["derive"] }
+
+[lib]
+path = "./lib.rs"
+

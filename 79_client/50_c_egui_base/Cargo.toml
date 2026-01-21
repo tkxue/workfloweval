@@ -1,0 +1,59 @@
+[package]
+name = "c_egui_base"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+web_common = { path = "/r/code/rust/79_client/09_c_web_common" }
+egui = { version = "0.33.3", features = ["color-hex"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.146", features = [] }
+
+wasm-bindgen = "0.2.106"
+console_error_panic_hook = { version = "0.1.7", default-features = false }
+
+# egui_extras = { version = "0.33.3", features = ["all_loaders", "svg"] }
+eframe = { version = "0.33.3", default-features = true, features = ["wgpu", "persistence", "wgpu"] }
+
+unicode_names2 = "2.0.0"
+gloo-timers = "0.3.0"
+lru = "0.16.2"
+ehttp = { version = "0.6.0", features = ["streaming"] }
+ewebsock = "0.8.0"
+bytemuck = "1.22.0"
+ironcalc_base = { version = "0.6.0", default-features = true }
+
+# getrandom = { version = "0.3.3", features = ["wasm_js"] }
+# formualizer-eval = { path = "/r/code/forks/formualizer/crates/formualizer-eval", features = [] }
+# formualizer-parse = { path = "/r/code/forks/formualizer/crates/formualizer-parse", features = [] }
+
+ahash = { version = "0.8.12", default-features = false, features = ["no-rng", "std", ] }
+enum-map = "2.7.3"
+profiling = { version = "1.0.17", default-features = false }
+
+
+egui_dock = "0.18.0"
+fastrand = "2"
+# indexmap = "2.10.0"
+
+rust_decimal = "1.37"
+rust_decimal_macros = "1.37"
+
+
+
+
+
+wasm-bindgen-futures = { version = "0.4.45", default-features = false }
+
+web-sys = { version = "^0.3.72", features = ["HtmlCanvasElement", "console"] }
+
+chrono = { version = "0.4.42", features = ["js-sys", "wasmbind"] }
+log = "0.4.29"
+uuid = { version = "1.19.0", features = ["v4", "js"] }
+
+
+c_app_msg = { path = "/r/code/rust/79_client/19_c_app_msg" }
+
+[lib]
+path = "./lib.rs"

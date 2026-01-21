@@ -1,0 +1,15 @@
+[package]
+name = "e_my_proc_macro"
+version = "0.1.100000104"
+edition = "2024"
+
+
+[dependencies]
+
+e_macro_include = { path = "/r/code/rust/01_ext/00_e_macro_include" }
+
+[lib]
+proc-macro = true
+path = "./lib.rs"
+
+

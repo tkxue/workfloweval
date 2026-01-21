@@ -1,0 +1,18 @@
+[package]
+name = "s_ffi"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# foundationdb = { version = "0.10.0", default-features = false, features = ["fdb-7_3", "embedded-fdb-include"] }
+# tokio = { version = "1.48.0", default-features = false, features = ["rt-multi-thread"] }
+# fastembed = { version = "5", default-features = false, features = ["hf-hub-rustls-tls", "ort-load-dynamic"] }
+# anyhow = "1.0.100"
+
+rustler = "0.36.2"
+s_shared = { path = "/r/code/rust/89_server/10_s_shared" }
+s_app = { path = "/r/code/rust/89_server/90_s_app" }
+
+
+[lib]
+path = "./lib.rs"

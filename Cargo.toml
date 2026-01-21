@@ -1,0 +1,30 @@
+[workspace]
+
+members = [
+    "01_ext/99_e_api",
+    "29_net/99_n_msg",
+    ###############
+    "79_client/19_c_app_msg",
+    "79_client/35_c_ww_sheet", 
+    "79_client/36_c_ww_sqlite", 
+    "79_client/37_c_ww_python", 
+    "79_client/38_c_ww_rune",
+    "79_client/39_c_ww_logic",
+    "79_client/60_c_app_base",
+    "79_client/61_c_app_repl",
+    "79_client/62_c_app_ssheet",
+    "79_client/65_c_app_code_editor",
+    "79_client/66_c_app_present", 
+    "79_client/88_c_html_vid",
+    "79_client/89_c_html_gfx", 
+    ###############
+    "89_server/10_s_shared",
+    "89_server/20_s_state",
+    "89_server/90_s_app",
+    "89_server/98_s_http",
+    "89_server/99_s_ffi",
+    "97_check_all",
+]
+
+
+resolver = "3"

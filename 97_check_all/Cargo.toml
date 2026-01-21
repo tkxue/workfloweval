@@ -1,0 +1,17 @@
+[package]
+name = "check_all"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+s_shared = { path = "/r/code/rust/89_server/10_s_shared" }
+s_ffi = { path = "/r/code/rust/89_server/99_s_ffi" }
+s_http = { path = "/r/code/rust/89_server/98_s_http" }
+
+c_ww_rune = { path = "/r/code/rust/79_client/38_c_ww_rune" }
+c_ww_logic = { path = "/r/code/rust/79_client/39_c_ww_logic" }
+c_html_gfx = { path = "/r/code/rust/79_client/89_c_html_gfx" }
+
+
+[lib]
+path = "./lib.rs"

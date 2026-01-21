@@ -1,0 +1,16 @@
+[package]
+name = "c_ww_logic"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+e_api = { path = "/r/code/rust/01_ext/99_e_api" }
+web_common = { path = "/r/code/rust/79_client/09_c_web_common" }
+wasm-bindgen = "0.2.106"
+console_error_panic_hook = { version = "0.1.7", default-features = false }
+c_app_msg = { path = "/r/code/rust/79_client/19_c_app_msg" }
+n_msg = { path = "/r/code/rust/29_net/99_n_msg" }
+async-oneshot = "0.5.9"
+
+[lib]
+path = "./lib.rs"
